@@ -25,5 +25,11 @@ class AddWordTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    
+    func wordAdded (sender : UIButton!) {
+        let word = textField.text
+        
+        
+    }
 
 }

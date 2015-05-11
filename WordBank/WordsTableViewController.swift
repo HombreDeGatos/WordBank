@@ -10,6 +10,8 @@ import UIKit
 
 class WordsTableViewController: UITableViewController {
 
+    var wordsArray : NSArray = NSArray(array: ["jared","symbiosis","cell"])
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -36,45 +38,55 @@ class WordsTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        return 1
+        
+        // + 1 for static Add Word Cell
+        return wordsArray.count + 1
     }
 
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        var cell : UITableViewCell
-        
-        switch indexPath.row {
-        case 0:
-            cell = tableView.dequeueReusableCellWithIdentifier("addWordCell", forIndexPath: indexPath) as AddWordTableViewCell
+        if indexPath.row == 0 {
+            let cell = tableView.dequeueReusableCellWithIdentifier("addWordCell", forIndexPath: indexPath) as AddWordTableViewCell
             
-        default:
-            cell = tableView.dequeueReusableCellWithIdentifier("wordCell", forIndexPath: indexPath) as UITableViewCell
- 
+//            var bgColorView = UIView()
+//            bgColorView.backgroundColor = UIColor.whiteColor()
+//            cell.selectedBackgroundView = bgColorView
+            
+            cell.addButton.addTarget(self, action: "wordAdded:", forControlEvents: UIControlEvents.TouchUpInside)
+            
+            return cell
+        }
+        else {
+            
+            let cell = tableView.dequeueReusableCellWithIdentifier("wordCell", forIndexPath: indexPath) as UITableViewCell
+            
+            cell.textLabel?.text = self.wordsArray[indexPath.row - 1] as? String
+        
+            return cell
         }
         
-        
-        // Configure the cell...
-
-        return cell
     }
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         if indexPath.row == 0 {
-        
-            let cell = tableView.dequeueReusableCellWithIdentifier("addWordCell", forIndexPath: indexPath) as AddWordTableViewCell
+            
+            let cell = tableView.cellForRowAtIndexPath(indexPath) as AddWordTableViewCell
             cell.labelView.hidden = true
         }
     }
     
     override func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+
         if indexPath.row == 0 {
             
-            let cell = tableView.dequeueReusableCellWithIdentifier("addWordCell", forIndexPath: indexPath) as AddWordTableViewCell
+            let cell = tableView.cellForRowAtIndexPath(indexPath) as AddWordTableViewCell
             cell.labelView.hidden = false
         }
+
     }
+
 
     /*
     // Override to support conditional editing of the table view.
