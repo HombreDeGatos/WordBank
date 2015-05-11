@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddWordTableViewCell: UITableViewCell {
+class AddWordTableViewCell: UITableViewCell, UITextFieldDelegate {
 
     @IBOutlet var textField: UITextField!
     @IBOutlet var addButton: UIButton!
@@ -18,6 +18,7 @@ class AddWordTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        self.textField.delegate = self
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -26,10 +27,32 @@ class AddWordTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        if (textField == self.textField) {
+            
+            self.addButton.sendActionsForControlEvents(.TouchUpInside)
+            textField.resignFirstResponder()
+            return false
+        }
+        return true
+    }
+    
     func wordAdded (sender : UIButton!) {
         let word = textField.text
         
+        println(word)
         
+        if word != "" {
+            let defaults = NSUserDefaults.standardUserDefaults()
+            if var wordList = defaults.stringArrayForKey("wordList") {
+                wordList.append(word)
+                defaults.setObject(wordList, forKey: "wordList")
+            }
+        }
+        
+        textField.text = ""
+        
+        println("here1")
     }
 
 }

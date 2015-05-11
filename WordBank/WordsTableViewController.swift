@@ -10,16 +10,35 @@ import UIKit
 
 class WordsTableViewController: UITableViewController {
 
-    var wordsArray : NSArray = NSArray(array: ["jared","symbiosis","cell"])
+    var wordsArray : NSArray? = NSUserDefaults.standardUserDefaults().stringArrayForKey("wordList")
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        let defaults = NSUserDefaults.standardUserDefaults()
+        if wordsArray == nil {
+            wordsArray = NSArray(array: [])
+            defaults.setObject(wordsArray, forKey: "wordList")
+        }
+        
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+    }
+    
+    func wordAdded (sender : UIButton!) {
+        
+        println("here2")
+        
+        let defaults = NSUserDefaults.standardUserDefaults()
+        wordsArray = defaults.stringArrayForKey("wordList")
+        println(wordsArray?.count)
+        
+        tableView.deselectRowAtIndexPath(NSIndexPath(index: 0), animated: true)
+        tableView.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -40,7 +59,7 @@ class WordsTableViewController: UITableViewController {
         // Return the number of rows in the section.
         
         // + 1 for static Add Word Cell
-        return wordsArray.count + 1
+        return (wordsArray?.count ?? 0) + 1
     }
 
     
@@ -53,6 +72,7 @@ class WordsTableViewController: UITableViewController {
 //            bgColorView.backgroundColor = UIColor.whiteColor()
 //            cell.selectedBackgroundView = bgColorView
             
+            cell.addButton.addTarget(cell, action: "wordAdded:", forControlEvents: UIControlEvents.TouchUpInside)
             cell.addButton.addTarget(self, action: "wordAdded:", forControlEvents: UIControlEvents.TouchUpInside)
             
             return cell
@@ -61,7 +81,7 @@ class WordsTableViewController: UITableViewController {
             
             let cell = tableView.dequeueReusableCellWithIdentifier("wordCell", forIndexPath: indexPath) as UITableViewCell
             
-            cell.textLabel?.text = self.wordsArray[indexPath.row - 1] as? String
+            cell.textLabel?.text = self.wordsArray?[indexPath.row - 1] as? String
         
             return cell
         }
@@ -74,6 +94,7 @@ class WordsTableViewController: UITableViewController {
             
             let cell = tableView.cellForRowAtIndexPath(indexPath) as AddWordTableViewCell
             cell.labelView.hidden = true
+            cell.textField.becomeFirstResponder()
         }
     }
     
@@ -82,7 +103,9 @@ class WordsTableViewController: UITableViewController {
         if indexPath.row == 0 {
             
             let cell = tableView.cellForRowAtIndexPath(indexPath) as AddWordTableViewCell
+            cell.textField.resignFirstResponder()
             cell.labelView.hidden = false
+            
         }
 
     }
