@@ -10,9 +10,33 @@ import UIKit
 
 class WordsTableViewController: UITableViewController {
 
+    @IBOutlet var searchBar: UISearchBar!
+    
+    var wordList : [String] {
+        get {
+            var results = NSUserDefaults.standardUserDefaults().objectForKey("wordList") as [String]?
+            if results == nil {
+                results = []
+            }
+            return results!
+        }
+        set (newValue) {
+            let val = newValue as [NSString]
+            NSUserDefaults.standardUserDefaults().setObject(val, forKey: "wordList")
+//            NSUserDefaults.standardUserDefaults().synchronize()
+        }
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        // Remove the icon, which is located in the left view
+        AppearanceBridger.setUITextFieldAppearance()
+        
+        // Give some left padding between the edge of the search bar and the text the user enters
+        self.searchBar.searchTextPositionAdjustment = UIOffsetMake(10, 0);
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -36,22 +60,14 @@ class WordsTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        return 1
+        return wordList.count
     }
 
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        var cell : UITableViewCell
-        
-        switch indexPath.row {
-        case 0:
-            cell = tableView.dequeueReusableCellWithIdentifier("addWordCell", forIndexPath: indexPath) as AddWordTableViewCell
-            
-        default:
-            cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath) as UITableViewCell
- 
-        }
+        let cell = tableView.dequeueReusableCellWithIdentifier("wordCell", forIndexPath: indexPath) as UITableViewCell
+        cell.textLabel?.text = wordList[indexPath.row]
         
         
         // Configure the cell...

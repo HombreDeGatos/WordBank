@@ -6,8 +6,14 @@
 //  Copyright (c) 2015 deGatos. All rights reserved.
 //
 
-#ifndef WordBank_AppearanceBridger_h
-#define WordBank_AppearanceBridger_h
+// AppearanceBridger.h
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
+@interface AppearanceBridger : NSObject {
+    // Protected instance variables (not recommended)
+}
 
-#endif
++ (void)setUITextFieldAppearance;
+
+@end

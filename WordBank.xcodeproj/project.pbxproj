@@ -14,6 +14,7 @@
 		EDF878A91B011CC400FEF049 /* WordBankTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF878A81B011CC400FEF049 /* WordBankTests.swift */; };
 		EDF878B31B011F7000FEF049 /* WordsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF878B21B011F7000FEF049 /* WordsTableViewController.swift */; };
 		EDF878B51B011F7F00FEF049 /* AddWordTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF878B41B011F7F00FEF049 /* AddWordTableViewCell.swift */; };
+		EDF878B81B0170A200FEF049 /* AppearanceBridger.m in Sources */ = {isa = PBXBuildFile; fileRef = EDF878B71B0170A200FEF049 /* AppearanceBridger.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +39,9 @@
 		EDF878A81B011CC400FEF049 /* WordBankTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordBankTests.swift; sourceTree = "<group>"; };
 		EDF878B21B011F7000FEF049 /* WordsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WordsTableViewController.swift; sourceTree = "<group>"; };
 		EDF878B41B011F7F00FEF049 /* AddWordTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddWordTableViewCell.swift; sourceTree = "<group>"; };
+		EDF878B61B0170A100FEF049 /* WordBank-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WordBank-Bridging-Header.h"; sourceTree = "<group>"; };
+		EDF878B71B0170A200FEF049 /* AppearanceBridger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppearanceBridger.m; sourceTree = "<group>"; };
+		EDF878B91B0170BF00FEF049 /* AppearanceBridger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppearanceBridger.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +90,9 @@
 				EDF878901B011CC300FEF049 /* Supporting Files */,
 				EDF878B21B011F7000FEF049 /* WordsTableViewController.swift */,
 				EDF878B41B011F7F00FEF049 /* AddWordTableViewCell.swift */,
+				EDF878B71B0170A200FEF049 /* AppearanceBridger.m */,
+				EDF878B91B0170BF00FEF049 /* AppearanceBridger.h */,
+				EDF878B61B0170A100FEF049 /* WordBank-Bridging-Header.h */,
 			);
 			path = WordBank;
 			sourceTree = "<group>";
@@ -216,6 +223,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EDF878B51B011F7F00FEF049 /* AddWordTableViewCell.swift in Sources */,
+				EDF878B81B0170A200FEF049 /* AppearanceBridger.m in Sources */,
 				EDF878931B011CC300FEF049 /* AppDelegate.swift in Sources */,
 				EDF878B31B011F7000FEF049 /* WordsTableViewController.swift in Sources */,
 			);
@@ -340,9 +348,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = WordBank/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "WordBank/WordBank-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -350,9 +361,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = WordBank/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "WordBank/WordBank-Bridging-Header.h";
 			};
 			name = Release;
 		};
