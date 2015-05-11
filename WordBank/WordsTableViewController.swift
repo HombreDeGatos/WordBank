@@ -49,7 +49,7 @@ class WordsTableViewController: UITableViewController {
             cell = tableView.dequeueReusableCellWithIdentifier("addWordCell", forIndexPath: indexPath) as AddWordTableViewCell
             
         default:
-            cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath) as UITableViewCell
+            cell = tableView.dequeueReusableCellWithIdentifier("wordCell", forIndexPath: indexPath) as UITableViewCell
  
         }
         
@@ -59,6 +59,22 @@ class WordsTableViewController: UITableViewController {
         return cell
     }
 
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        if indexPath.row == 0 {
+        
+            let cell = tableView.dequeueReusableCellWithIdentifier("addWordCell", forIndexPath: indexPath) as AddWordTableViewCell
+            cell.labelView.hidden = true
+        }
+    }
+    
+    override func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+        if indexPath.row == 0 {
+            
+            let cell = tableView.dequeueReusableCellWithIdentifier("addWordCell", forIndexPath: indexPath) as AddWordTableViewCell
+            cell.labelView.hidden = false
+        }
+    }
 
     /*
     // Override to support conditional editing of the table view.
