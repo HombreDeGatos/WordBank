@@ -31,8 +31,12 @@ class WordsTableViewController: UITableViewController, UISearchBarDelegate, UITe
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.searchBar.delegate = self
+        // Configure Delete Button
+        self.tableView.allowsMultipleSelectionDuringEditing = false;
         
+        // Configure Search Bar
+        self.searchBar.delegate = self
+        self.searchBar.returnKeyType = UIReturnKeyType.Done
         
         // Remove the icon, which is located in the left view
         AppearanceBridger.setUITextFieldAppearance()
@@ -55,19 +59,31 @@ class WordsTableViewController: UITableViewController, UISearchBarDelegate, UITe
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
 
+        
         if let word = self.searchBar.text {
             println(word)
             
-            self.wordList.append(word)
-            self.tableView.reloadData()
+            if UIReferenceLibraryViewController.dictionaryHasDefinitionForTerm(word) {
             
-            searchBar.text = ""
+                self.wordList.insert(word, atIndex: 0)
+                self.tableView.reloadData()
             
-            // Dismiss the search bar
-//            searchBar.resignFirstResponder()
-        }
+                searchBar.text = ""
+            
+                // Dismiss the search bar
+                searchBar.resignFirstResponder()
+            } else {
+                
+                // Configure Alert
+                let alertController = UIAlertController(title: "WordBank", message: "\(word) Not Found", preferredStyle: UIAlertControllerStyle.Alert)
+                alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: nil))
+                
+                // Show Alert
+                self.presentViewController(alertController, animated: true, completion: nil)
+                
+            }
 
-        
+        }
         
     }
 
@@ -89,7 +105,7 @@ class WordsTableViewController: UITableViewController, UISearchBarDelegate, UITe
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("wordCell", forIndexPath: indexPath) as UITableViewCell
-        cell.textLabel?.text = wordList[self.wordList.count -  indexPath.row - 1]
+        cell.textLabel?.text = wordList[indexPath.row]
         
         
         // Configure the cell...
@@ -97,7 +113,25 @@ class WordsTableViewController: UITableViewController, UISearchBarDelegate, UITe
         return cell
     }
 
-
+    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
+    }
+    
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == UITableViewCellEditingStyle.Delete {
+            self.wordList.removeAtIndex(indexPath.row)
+            
+            self.tableView.reloadData()
+        }
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        let dictionary = UIReferenceLibraryViewController(term: self.wordList[indexPath.row])
+        
+        
+    }
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
