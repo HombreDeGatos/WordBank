@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WordsTableViewController: UITableViewController {
+class WordsTableViewController: UITableViewController, UISearchBarDelegate, UITextFieldDelegate {
 
     @IBOutlet var searchBar: UISearchBar!
     
@@ -23,7 +23,7 @@ class WordsTableViewController: UITableViewController {
         set (newValue) {
             let val = newValue as [NSString]
             NSUserDefaults.standardUserDefaults().setObject(val, forKey: "wordList")
-//            NSUserDefaults.standardUserDefaults().synchronize()
+            NSUserDefaults.standardUserDefaults().synchronize()
         }
     }
     
@@ -31,6 +31,9 @@ class WordsTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.searchBar.delegate = self
+        
+        
         // Remove the icon, which is located in the left view
         AppearanceBridger.setUITextFieldAppearance()
         
@@ -47,6 +50,25 @@ class WordsTableViewController: UITableViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+
+    
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+
+        if let word = self.searchBar.text {
+            println(word)
+            
+            self.wordList.append(word)
+            self.tableView.reloadData()
+            
+            searchBar.text = ""
+            
+            // Dismiss the search bar
+//            searchBar.resignFirstResponder()
+        }
+
+        
+        
     }
 
     // MARK: - Table view data source
@@ -67,7 +89,7 @@ class WordsTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("wordCell", forIndexPath: indexPath) as UITableViewCell
-        cell.textLabel?.text = wordList[indexPath.row]
+        cell.textLabel?.text = wordList[self.wordList.count -  indexPath.row - 1]
         
         
         // Configure the cell...
