@@ -56,6 +56,17 @@ class WordsTableViewController: UITableViewController, UISearchBarDelegate, UITe
         // Dispose of any resources that can be recreated.
     }
 
+    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+        
+        let pb = UIPasteboard.generalPasteboard()
+        
+        self.searchBar.placeholder = pb.string ?? ""
+    }
+    
+    func searchBarTextDidEndEditing(searchBar: UISearchBar) {
+        println("here")
+        self.searchBar.placeholder = "Add New Word"
+    }
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
 
@@ -107,11 +118,9 @@ class WordsTableViewController: UITableViewController, UISearchBarDelegate, UITe
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("wordCell", forIndexPath: indexPath) as UITableViewCell
-        cell.textLabel?.text = wordList[indexPath.row]
-        
-        
-        // Configure the cell...
 
+        // Configure the cell...
+        cell.textLabel?.text = wordList[indexPath.row]
         return cell
     }
 
@@ -129,9 +138,15 @@ class WordsTableViewController: UITableViewController, UISearchBarDelegate, UITe
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        let dictionary = UIReferenceLibraryViewController(term: self.wordList[indexPath.row])
+        self.searchBar.resignFirstResponder()
         
+        let dictionary = UIReferenceLibraryViewController(term: self.wordList[indexPath.row])
         self.navigationController?.pushViewController(dictionary, animated: true)
+        
+    }
+    
+    override func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+        self.searchBar.resignFirstResponder()
     }
     
     /*
