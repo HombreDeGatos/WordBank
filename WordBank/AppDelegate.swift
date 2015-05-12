@@ -16,7 +16,91 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        
+        // Ask for User Permission to receive notifications
+//        application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: UIUserNotificationType.Sound|UIUserNotificationType.Badge|UIUserNotificationType.Alert, categories: nil))
+        
+        self.setupNoficationSettings(application)
+//        self.scheduleLocalNotification(application)
+        
         return true
+    }
+    
+    func setupNoficationSettings(application: UIApplication) {
+        // Check if Notifications Settings have been set
+        let notificationSettings: UIUserNotificationSettings! = application.currentUserNotificationSettings()
+        
+        if notificationSettings.types == UIUserNotificationType.None {
+        
+        
+        // Specify the notification types.
+        var notificationTypes: UIUserNotificationType = UIUserNotificationType.Alert | UIUserNotificationType.Sound
+        
+        // Specify the Notification actions
+        var justInformAction = UIMutableUserNotificationAction()
+        justInformAction.identifier = "justInform"
+        justInformAction.title = "I know it"
+        justInformAction.activationMode = UIUserNotificationActivationMode.Background
+        
+        var showDictionaryAction = UIMutableUserNotificationAction()
+        showDictionaryAction.identifier = "showDict"
+        showDictionaryAction.title = "Define"
+        showDictionaryAction.activationMode = UIUserNotificationActivationMode.Foreground
+        
+        var ignoreAction = UIMutableUserNotificationAction()
+        ignoreAction.identifier = "ignore"
+        ignoreAction.title = "Ignore"
+        ignoreAction.activationMode = UIUserNotificationActivationMode.Foreground
+        
+        // Group Actions
+        let actionArray = NSArray(objects: justInformAction, showDictionaryAction, ignoreAction)
+        let actionArrayMinimal = NSArray(objects: showDictionaryAction, ignoreAction)
+        
+        // Specify Action Categories
+        var wordReminderCategory = UIMutableUserNotificationCategory()
+        wordReminderCategory.identifier = "wordReminderCategory"
+        wordReminderCategory.setActions(actionArray, forContext: UIUserNotificationActionContext.Default)
+        wordReminderCategory.setActions(actionArrayMinimal, forContext: UIUserNotificationActionContext.Minimal)
+        
+        // Registering Notification Settings
+        let categoriesforSettings = NSSet(object: wordReminderCategory)
+        let newNotificationSettings = UIUserNotificationSettings(forTypes: notificationTypes, categories: categoriesforSettings)
+        
+        application.registerUserNotificationSettings(newNotificationSettings)
+        
+        }
+    }
+    
+    func scheduleLocalNotification(application : UIApplication) {
+        var localNotification = UILocalNotification()
+        localNotification.fireDate = NSDate(timeIntervalSinceNow: NSTimeInterval(5.0))
+        localNotification.alertBody = "Remember that word?"
+        localNotification.alertAction = "View List"
+        localNotification.category = "wordReminderCategory"
+        
+        application.scheduleLocalNotification(localNotification)
+    }
+    
+    func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
+        
+        println(notificationSettings.types.rawValue)
+        self.scheduleLocalNotification(UIApplication.sharedApplication())
+    }
+    
+    func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
+        println("Received Notification:")
+        println(notification.alertBody)
+    }
+    
+    func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forLocalNotification notification: UILocalNotification, completionHandler: () -> Void) {
+        if identifier == "showDict" {
+            NSNotificationCenter.defaultCenter().postNotificationName("showDefinition", object: nil)
+        }
+        else if identifier == "ignore" {
+            // Do nothing
+        }
+        
+        completionHandler()
     }
 
     func applicationWillResignActive(application: UIApplication) {

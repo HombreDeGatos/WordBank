@@ -31,6 +31,7 @@ class WordsTableViewController: UITableViewController, UISearchBarDelegate, UITe
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        
         // Configure Delete Button
         self.tableView.allowsMultipleSelectionDuringEditing = false;
         
@@ -44,6 +45,9 @@ class WordsTableViewController: UITableViewController, UISearchBarDelegate, UITe
         // Give some left padding between the edge of the search bar and the text the user enters
         self.searchBar.searchTextPositionAdjustment = UIOffsetMake(10, 0);
         
+        // Configure Local Notifications
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "showDefNotification", name: "showDefinition", object: nil)
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -54,6 +58,14 @@ class WordsTableViewController: UITableViewController, UISearchBarDelegate, UITe
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func showDefNotification() {
+//        self.tableView.selectRowAtIndexPath(NSIndexPath(index: 0), animated: true, scrollPosition: UITableViewScrollPosition.Top)
+//        println("here: got notification")
+        
+        let dictionary = UIReferenceLibraryViewController(term: "food")
+        self.navigationController?.pushViewController(dictionary, animated: true)
     }
 
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
