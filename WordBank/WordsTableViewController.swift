@@ -63,7 +63,7 @@ class WordsTableViewController: UITableViewController, UISearchBarDelegate, UITe
         if let word = self.searchBar.text {
             println(word)
             
-            if UIReferenceLibraryViewController.dictionaryHasDefinitionForTerm(word) {
+//            if UIReferenceLibraryViewController.dictionaryHasDefinitionForTerm(word) {
             
                 self.wordList.insert(word, atIndex: 0)
                 self.tableView.reloadData()
@@ -72,16 +72,18 @@ class WordsTableViewController: UITableViewController, UISearchBarDelegate, UITe
             
                 // Dismiss the search bar
                 searchBar.resignFirstResponder()
-            } else {
+//            } else {
+                // If word is not in iOS built-in dictionary
                 
+                /*
                 // Configure Alert
                 let alertController = UIAlertController(title: "WordBank", message: "\(word) Not Found", preferredStyle: UIAlertControllerStyle.Alert)
                 alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: nil))
                 
                 // Show Alert
                 self.presentViewController(alertController, animated: true, completion: nil)
-                
-            }
+
+            } */
 
         }
         
@@ -129,7 +131,7 @@ class WordsTableViewController: UITableViewController, UISearchBarDelegate, UITe
         
         let dictionary = UIReferenceLibraryViewController(term: self.wordList[indexPath.row])
         
-        
+        self.navigationController?.pushViewController(dictionary, animated: true)
     }
     
     /*

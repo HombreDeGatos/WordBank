@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="t6F-fy-FDB">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Words Table View Controller-->
@@ -19,40 +18,6 @@
                             <textInputTraits key="textInputTraits" autocorrectionType="yes" spellCheckingType="yes" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                         </searchBar>
                         <prototypes>
-                            <tableViewCell hidden="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="1dU-aP-4MT" customClass="AddWordTableViewCell" customModule="WordBank" customModuleProvider="target">
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1dU-aP-4MT" id="rag-4J-dXl">
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="..." minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YWz-g2-4Sk">
-                                            <rect key="frame" x="23" y="7" width="539" height="30"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                            <textInputTraits key="textInputTraits"/>
-                                        </textField>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kUZ-5e-b1g">
-                                            <rect key="frame" x="570" y="11" width="22" height="22"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="22" id="LeO-6q-uaN"/>
-                                            </constraints>
-                                            <state key="normal">
-                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                            </state>
-                                        </button>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="YWz-g2-4Sk" firstAttribute="top" secondItem="rag-4J-dXl" secondAttribute="topMargin" constant="-1" id="BcL-L7-z9A"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="YWz-g2-4Sk" secondAttribute="bottom" constant="-1.5" id="D7c-Xm-0NC"/>
-                                        <constraint firstItem="YWz-g2-4Sk" firstAttribute="centerY" secondItem="kUZ-5e-b1g" secondAttribute="centerY" id="hOP-1P-uhe"/>
-                                        <constraint firstItem="kUZ-5e-b1g" firstAttribute="trailing" secondItem="rag-4J-dXl" secondAttribute="trailingMargin" id="jUv-dD-FEs"/>
-                                        <constraint firstItem="kUZ-5e-b1g" firstAttribute="leading" secondItem="YWz-g2-4Sk" secondAttribute="trailing" constant="8" symbolic="YES" id="jlH-Ba-xuh"/>
-                                        <constraint firstItem="YWz-g2-4Sk" firstAttribute="leading" secondItem="rag-4J-dXl" secondAttribute="leadingMargin" id="ptN-8C-7c8"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="addButton" destination="kUZ-5e-b1g" id="BBh-84-vAO"/>
-                                    <outlet property="textField" destination="YWz-g2-4Sk" id="pWC-US-PsK"/>
-                                </connections>
-                            </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="wordCell" textLabel="zvp-x4-EqR" style="IBUITableViewCellStyleDefault" id="EC1-cC-iTn">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
